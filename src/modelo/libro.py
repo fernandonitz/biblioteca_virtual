@@ -1,5 +1,4 @@
 from .estado_libro import EstadoLibro
-from ..servicio.retiro import Retiro
 
 class Libro:
     def __init__(self, titulo, autor, categoria, resena):
@@ -8,17 +7,24 @@ class Libro:
         self.categoria = categoria	
         self.resena = resena
         self.status = EstadoLibro.EN_STOCK
-        self.retiro = Retiro()
-        print("nuevo libro")
-
-    def __hola(self):
-        print("hola")
 
     def prestar(self):
         self.status = EstadoLibro.ENTREGADO
     
+    def devolver(self):
+        self.status = EstadoLibro.EN_STOCK
+
     def get_status(self):
         return self.status
+
+    def to_map(self):
+        return {
+            "titulo": self.titulo,
+            "autor": self.autor,
+            "categoria": self.categoria,
+            "resena": self.resena,
+            "status": self.status.value,
+        }
 
 if __name__ == "__main__":
     libro = Libro("Juan Pablo II, mi querido predecesor","Joseph Ratzinger","Santos","Un libro para conocer la intimidad de Juan Pablo II desde la optica de su amigo y sucesor Benedicto XVI")

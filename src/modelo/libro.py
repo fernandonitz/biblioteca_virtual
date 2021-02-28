@@ -9,11 +9,12 @@ class Libro:
         self.resena = resena
         self.status = EstadoLibro.EN_STOCK
         self.retiro = Retiro()
+        print("nuevo libro")
 
     def __hola(self):
         print("hola")
 
-    def prestar(self, usuario):
+    def prestar(self):
         self.status = EstadoLibro.ENTREGADO
     
     def get_status(self):

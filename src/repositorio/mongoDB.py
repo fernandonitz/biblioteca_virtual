@@ -19,16 +19,16 @@ class MongoDataBase:
         _collection = self.db[collection]
         x = _collection.insert_one(document)    
 
-    def update(self):
+    def update(self, collection, document):
         print("TODO")
 
-    def delete(self):
+    def delete(self, collection, document):
         print("TODO")
 
-    def get_all(self):
+    def get_all(self, collection):
         print("TODO")
     
-    def get_by_id(self):
+    def get_by_id(self, collection, id):
         print("TODO")
 
 if __name__ == "__main__":

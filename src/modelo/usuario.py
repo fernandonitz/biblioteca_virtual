@@ -1,3 +1,6 @@
+def dni_search(dni):
+    return {"dni": dni}
+
 class Usuario:
     def __init__(self, nombre, apellido, dni, email, telefono):
         self.nombre = nombre

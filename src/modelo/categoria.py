@@ -5,4 +5,4 @@ class Categoria:
     def to_map(self):
         return {
             "name": self.name
-        }
+        }  

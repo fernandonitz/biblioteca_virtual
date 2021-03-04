@@ -23,7 +23,7 @@ class Libro:
 
     def prestar(self):
         self.cantidad = self.cantidad - 1
-        if self.cantidad == 0
+        if self.cantidad == 0:
             self.status = EstadoLibro.AGOTADO
     
     def devolver(self):

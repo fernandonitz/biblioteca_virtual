@@ -1,40 +1,64 @@
-from tkinter import *
+import tkinter as tk
+from tkinter import ttk
 from .modelo.libro import Libro
+from .servicio.libro import ServicioLibro
+from .repositorio.mongoDB import MongoDataBase
+import json
 
 class Main: 
     def __init__(self):
-        self.window = Tk()
-        self.createMainPage();
-        self.window.mainloop()
+
+        self.window = tk.Tk()
         
-    def initWindow(self):
-        self.window.geometry("400x200")
-        self.window.title("Welcome to LikeGeeks app")
-    
-    def createMainPage(self):
-        self.initWindow()
-        lbl = Label(self.window, text="Titulo")
-        lbl.grid(column=1, row=0)
-        B = Button(self.window, text ="Ver Libros", command = self.verLibros)
-        B.grid(column=1, row=1)     
-        B = Button(self.window, text ="Prestamos", command = self.prestamos)
-        B.grid(column=1, row=2)     
-        B = Button(self.window, text ="Retirar Libro", command = self.retirar)
-        B.grid(column=1, row=3)     
-        lbl = Label(self.window, text="Buscar libro o Usuario: ")
-        lbl.grid(column=0, row=4)
-        entry = Entry(self.window,width=30)
-        entry.grid(column=1, row=4)
-        B = Button(self.window, text ="Buscar", command = self.buscar)
-        B.grid(column=2, row=4)         
+        self.mongo = MongoDataBase()
+        self.servicioLibro = ServicioLibro(self.mongo)
+
+        self.tabControl = ttk.Notebook(self.window) 
+  
+        self.tab1 = ttk.Frame(self.tabControl) 
+        self.tab2 = ttk.Frame(self.tabControl) 
+        self.tab3 = ttk.Frame(self.tabControl) 
+        self.tab4 = ttk.Frame(self.tabControl) 
+        
+        self.tabControl.add(self.tab1, text ='Home') 
+        self.tabControl.add(self.tab2, text ='Ver Libros') 
+        self.tabControl.add(self.tab3, text ='Prestamos') 
+        self.tabControl.add(self.tab4, text ='Retirar Libro') 
+        self.tabControl.pack(expand = 1, fill ="both") 
+        
+        self.verLibros()
+        self.prestamos()
+        self.retirarLibro()
+        self.home()
+
+        self.window.mainloop()
+         
+    def home(self):
+        ttk.Label(self.tab1, text ="Welcome to GeeksForGeeks").grid(column = 0, row = 0, padx = 30, pady = 30)  
+
     def verLibros(self):
-        print("TODO")
+        libros = self.servicioLibro.get_all()
+        print(libros)
+        i = 0
+        print(libros)
+        for libro in libros:
+            #libro = json.load(libro)
+            j = 0
+            for attribute, value in libro.items():
+                cell = ttk.Entry(self.tab2, width=10)
+                cell.grid(row=i, column=j)
+                cell.insert(0, value)
+                j = j + 1
+            i = i + 1
+
+        #ttk.Label(self.tab2, text ="Lets dive into the world of computers").grid(column = 0, row = 0, padx = 30, pady = 30) 
+
     def prestamos(self):
-        print("TODO")
-    def retirar(self):
-        print("TODO")
-    def buscar(self):
-        print("TODO")
+        ttk.Label(self.tab3, text ="Lets dive into the world of computers").grid(column = 0, row = 0, padx = 30, pady = 30) 
+
+    def retirarLibro(self):
+        ttk.Label(self.tab4, text ="Lets dive into the world of computers").grid(column = 0, row = 0, padx = 30, pady = 30) 
+
 main = Main()
 #lbl = Label(window, text="Hello")
 #lbl.grid(column=3, row=0)

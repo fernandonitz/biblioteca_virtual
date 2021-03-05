@@ -26,7 +26,8 @@ class MongoDataBase:
         print("TODO")
 
     def get_all(self, collection):
-        print("TODO")
+        _collection = self.db[collection]
+        return _collection.find({})
     
     def get_by_id(self, collection, id):
         print("TODO")

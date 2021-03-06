@@ -38,17 +38,23 @@ class Main:
 
     def verLibros(self):
         libros = self.servicioLibro.get_all()
-        print(libros)
-        i = 0
-        print(libros)
+        atributos = ["titulo","autor","categoria","resena"]
+        titulos = ["Titulo","Autor","Categoria","Reseña"]
+        j = 0
+        for titulo in titulos:
+            cell = ttk.Entry(self.tab2, width=10)
+            cell.grid(row=0, column=j)
+            cell.insert(0, titulo)
+            j = j + 1 
+        i = 1
         for libro in libros:
-            #libro = json.load(libro)
             j = 0
             for attribute, value in libro.items():
-                cell = ttk.Entry(self.tab2, width=10)
-                cell.grid(row=i, column=j)
-                cell.insert(0, value)
-                j = j + 1
+                if attribute in atributos:
+                    cell = ttk.Entry(self.tab2, width=10)
+                    cell.grid(row=i, column=j)
+                    cell.insert(0, value)
+                    j = j + 1
             i = i + 1
 
         #ttk.Label(self.tab2, text ="Lets dive into the world of computers").grid(column = 0, row = 0, padx = 30, pady = 30) 

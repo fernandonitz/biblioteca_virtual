@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter.filedialog import askopenfile 
 from .modelo.libro import Libro
 from .servicio.libro import ServicioLibro
+from .repositorio.googleDrive import GoogleDriveRepo
 from .repositorio.mongoDB import MongoDataBase
 import json
 
@@ -10,6 +12,7 @@ class Main:
 
         self.window = tk.Tk()
         
+        self.googleDrive = GoogleDriveRepo()
         self.mongo = MongoDataBase()
         self.servicioLibro = ServicioLibro(self.mongo)
 
@@ -40,24 +43,29 @@ class Main:
         libros = self.servicioLibro.get_all()
         atributos = ["titulo","autor","categoria","resena"]
         titulos = ["Titulo","Autor","Categoria","Reseña"]
+        size = [20,20,20,40]
         j = 0
         for titulo in titulos:
-            cell = ttk.Entry(self.tab2, width=10)
-            cell.grid(row=0, column=j)
-            cell.insert(0, titulo)
+            cell = ttk.Label(self.tab2, width=size[j], text=titulo)
+            cell.grid(row=1, column=j)
             j = j + 1 
-        i = 1
+        i = 2
         for libro in libros:
             j = 0
             for attribute, value in libro.items():
                 if attribute in atributos:
-                    cell = ttk.Entry(self.tab2, width=10)
+                    cell = ttk.Label(self.tab2, width=size[j], text=value)
                     cell.grid(row=i, column=j)
-                    cell.insert(0, value)
                     j = j + 1
             i = i + 1
-
+        btn = ttk.Button(self.tab2, text ='Open', command = lambda:self.open_file()) 
+        btn.grid(row=0, column=0) 
         #ttk.Label(self.tab2, text ="Lets dive into the world of computers").grid(column = 0, row = 0, padx = 30, pady = 30) 
+
+    def open_file(self): 
+        file_name = askopenfile(filetypes =[('Python Files', '*')]) 
+        self.googleDrive.uploadFile(file_name)
+  
 
     def prestamos(self):
         ttk.Label(self.tab3, text ="Lets dive into the world of computers").grid(column = 0, row = 0, padx = 30, pady = 30) 
